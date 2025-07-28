@@ -161,10 +161,9 @@
             <div class="row mb-3">
               <div class="col-sm-6 py-2">
                 <h6>
-                  Degree:
+                  Qualification:
                   <span class="text-secondary"
-                    >BE Information and Communication Technology (Final
-                    year)</span
+                    >BE Information and Communication Technology</span
                   >
                 </h6>
               </div>
@@ -227,7 +226,7 @@
                   class="far fa-dot-circle text-primary position-absolute"
                   style="top: 2px; left: -32px"
                 ></i>
-                <h5 class="font-weight-bold mb-1">Bachelors In ICT</h5>
+                <h5 class="font-weight-bold mb-1">B.E. in Information and Communication Technology</h5>
                 <p class="mb-2">
                   <strong
                     >Sal Institute of Technological and Engineering
@@ -236,7 +235,7 @@
                   |
                   <small>2021 - 2025</small>
                 </p>
-                <p>Semester - 8th <b>|</b> CGPA = 7.33</p>
+                <p>Graduated<b>|</b> CGPA = 7.72</p>
               </div>
               <div class="position-relative mb-4">
                 <i
@@ -642,7 +641,7 @@
               >
                 <a href="img/projects/wanderlust.jpg" data-lightbox="portfolio">
                   <a
-                    href="https://yash-wanderlust.onrender.com/"
+                    href="https://github.com/Yash7001/wanderlust"
                     class="fa fa-arrow-right text-white"
                     style="font-size: 60px; text-decoration: none"
                     target="_blank"
@@ -843,10 +842,6 @@
     <!-- Scroll to Bottom -->
     <i class="fa fa-2x fa-angle-down text-white scroll-to-bottom"></i>
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-outline-dark px-0 back-to-top"
-      ><i class="fa fa-angle-double-up"></i
-    ></a>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -890,10 +885,140 @@
           encodedSubject +
           "&body=" +
           encodedBody;
-
         // Open default email client
         window.location.href = mailtoLink;
       }
     </script>
+    <!-- Voice Bot Floating Button and Modal Start -->
+    <style>
+      @keyframes bounce {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
+      }
+      #voiceBotBtn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 9999;
+        background: #0bceaf;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        cursor: pointer;
+        transition: background 0.2s;
+        animation: bounce 1s infinite;
+      }
+      #voiceBotBtn:hover {
+        background: #6c757d;
+      }
+      #voiceBotModal {
+        display: none;
+        position: fixed;
+        z-index: 10000;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+      }
+      #voiceBotModalContent {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 0;
+        border: 1px solid #888;
+        border-radius: 16px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        position: relative;
+      }
+      #closeVoiceBot {
+        color: #aaa;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        font-size: 32px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 10001;
+      }
+      #closeVoiceBot:hover {
+        color: #333;
+      }
+      @media (max-width: 600px) {
+        #voiceBotModalContent {
+          width: 98vw;
+          max-width: 98vw;
+          height: 90vh;
+        }
+        #voiceBotModalContent iframe {
+          height: 70vh !important;
+          min-height: 400px !important;
+        }
+      }
+      
+      /* Ensure voice bot canvas has proper dimensions */
+      #voiceBotModalContent iframe {
+        display: block;
+        width: 100% !important;
+        height: 600px !important;
+        min-height: 500px !important;
+      }
+    </style>
+    <button id="voiceBotBtn" title="Open Voice Bot">
+      <i class="fas fa-microphone"></i>
+    </button>
+    <div id="voiceBotModal">
+      <div id="voiceBotModalContent">
+        <span id="closeVoiceBot">&times;</span>
+        <iframe
+          src="https://yashvoicebot.netlify.app/"  
+          width="100%"
+          height="600"
+          style="border: none; border-radius: 0 0 16px 16px; min-height: 600px; min-width: 300px;"
+          allow="microphone; clipboard-write"
+          title="Voice Bot"
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+    <script>
+      const voiceBotBtn = document.getElementById('voiceBotBtn');
+      const voiceBotModal = document.getElementById('voiceBotModal');
+      const closeVoiceBot = document.getElementById('closeVoiceBot');
+      voiceBotBtn.onclick = function() {
+        voiceBotModal.style.display = 'block';
+        // Ensure iframe is properly loaded and sized
+        const iframe = document.querySelector('#voiceBotModalContent iframe');
+        if (iframe) {
+          iframe.style.display = 'block';
+          // Force a resize event to trigger WebGL canvas initialization
+          setTimeout(() => {
+            iframe.contentWindow?.postMessage('resize', '*');
+          }, 100);
+        }
+      };
+      closeVoiceBot.onclick = function() {
+        voiceBotModal.style.display = 'none';
+      };
+      window.onclick = function(event) {
+        if (event.target === voiceBotModal) {
+          voiceBotModal.style.display = 'none';
+        }
+      };
+    </script>
+    <!-- Voice Bot Floating Button and Modal End -->
   </body>
 </html>

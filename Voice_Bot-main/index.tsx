@@ -11,36 +11,48 @@ import {createBlob, decode, decodeAudioData} from './utils';
 import './visual-3d';
 
 const RESUME_DATA = `
-Kartavya Master
-kartavyamaster17@gmail.com • 706XXXX868 • LinkedIn • Github • Portfolio
+Yash Prajapati
+yashprajapati1007@gmail.com • 9313077125 • LinkedIn • Github • Portfolio • Ahmedabad, Gujarat
 
 Professional Summary & Skills
-AI Developer with a B.Tech in Artificial Intelligence and Data Science and hands-on experience building production-ready GenAl applications. Skilled in Generative AI, LangChain, RAG (Retrieval-Augmented Generation), Prompt Engineering, Backend Development with strong foundations in Machine Learning, Natural Language Processing(NLP) and Generative AI. Proficient in building AI Agents, voice-based AI agents, MCP Tools, Backend-API development, and prompt optimization to reduce hallucinations and improve model efficiency.
+AI/ML enthusiast with hands-on experience from an internship at ISRO, where I worked on satellite image reconstruction using deep learning models. Passionate about how AI is reshaping the world. Skilled in Python, TensorFlow, Keras, and the MERN stack. Known as a fast learner with high patience, strong problem-solving abilities, and eager to mentor freshers and interns in the future. Currently, seeking a internshps as well as full-time roles in AI/ML or Data science. Ready to join Immediately. Also ready to work in any location in the world.
 
 Professional Work Experience
-• GenAI Intern | Mirai Minds LLP
-  o Your work experience and on which technology you have worked with
+• AI/ML Intern | Space Applications Centre-ISRO | 01/2025 - 04/2025
+  o Developed a deep learning model using a hybrid ConvLSTM architecture to reconstruct missing or corrupted satellite datasets by leveraging advanced image processing techniques and learning spatiotemporal patterns.
 
-• GenAI Intern | TECOSYS
-  o Your work experience and on which technology you have worked with
-
-• AI Intern | YHills, E-Cell (IIT Hydrabad)
-  o Your work experience and on which technology you have worked with
+• SDE Intern | Gift Company Limited | 06/2024 - 07/2024
+  o Streamlined a lengthy process by developing an efficient DOP application with MySQL database integration, reducing paperwork by 75%.
 
 Selected Projects
-• 
+• Partial Line Loss Correction: Certificate
+  o As a part of ISRO's research, single-handedly developed a ConvLSTM-based model for predicting missing pixels in INSAT 3DS satellite images, using thousands of image sequences.
+  o Implemented a binary mask approach to restore missing pixels, normalizing pixel values and achieving a MAE of 0.0006, and accuracy of about 98% with minimal image modifications.
+
+• Wanderlust: A Hotel Booking Website: GitHub Repo
+  o Created a robust hotel exploration platform using the MERN stack with signup/login features.
+  o Has implementation and showcase of various CRUD operations.
+
+SKILLS											           
+• Data Science & Machine Learning: Deep Learning, Computer Vision, Supervised Learning, Model Optimization, Data Preprocessing, CNN, LSTM, ANN
+• Programming Languages: Python, JavaScript, C
+• Libraries & Frameworks: TensorFlow, Keras, NumPy, Matplotlib, OpenCV, scikit-learn, Pandas
+• Web Development: HTML, CSS, Node.js, React.js, SQL
+• Tools: Git, GitHub, Visual Studio Code, Jupyter Notebook, Google Colab
+• Soft skills: Patience, Leadership, Communication, fast-learner
 
 Education
-• SARVAJANIK COLLAGE OF ENGINEERING AND TECHNOLOGY (SCET-SU) (2021 - 2025)
-  B.Tech in Artificial Intelligence and Data Science
-  C.CGPA = 8.6
+• Sal Institute of Technology and Engineering Research (October, 2021 - June, 2025)
+  B.E in Information and Communication Technology
+  C.CGPA = 7.72
 
 Certifications/Courses
-• AI Agents Fundamentals [Link]
-• Prompt Engineering for ChatGPT [Link]
-• Generative Al with Langchain and Huggingface [Link]
-• Prompt Design in Vertex AI Skill Badge [Link]
-• Develop GenAI Apps with Gemini and Streamlit Skill Badge [Link]
+• Google AI Essentials
+• Full Stack Development
+
+ACHIEVEMENTS										           
+•	Led university football team to 3 consecutive inter-college championships by valuing every player and making quick, strategic on-field decisions.
+
 `;
 
 @customElement('gdm-live-audio')
@@ -49,8 +61,8 @@ export class GdmLiveAudio extends LitElement {
   @state() status = '';
   @state() error = '';
 
-  private client: GoogleGenAI;
-  private session: Session;
+  private client: GoogleGenAI | undefined;
+  private session: Session | null = null;
   private inputAudioContext = new (window.AudioContext ||
     (window as any).webkitAudioContext)({sampleRate: 16000});
   private outputAudioContext = new (window.AudioContext ||
@@ -58,9 +70,9 @@ export class GdmLiveAudio extends LitElement {
   @state() inputNode = this.inputAudioContext.createGain();
   @state() outputNode = this.outputAudioContext.createGain();
   private nextStartTime = 0;
-  private mediaStream: MediaStream;
-  private sourceNode: AudioBufferSourceNode;
-  private scriptProcessorNode: ScriptProcessorNode;
+  private mediaStream: MediaStream | null = null;
+  private sourceNode: AudioNode | null = null;
+  private scriptProcessorNode: ScriptProcessorNode | null = null;
   private sources = new Set<AudioBufferSourceNode>();
 
   static styles = css`
@@ -129,7 +141,8 @@ export class GdmLiveAudio extends LitElement {
     this.initAudio();
 
     this.client = new GoogleGenAI({
-      apiKey: process.env.API_KEY, // Changed from GEMINI_API_KEY
+      apiKey: import.meta.env.VITE_GEMINI_API_KEY // Changed from GEMINI_API_KEY
+
     });
 
     this.outputNode.connect(this.outputAudioContext.destination);
@@ -139,26 +152,28 @@ export class GdmLiveAudio extends LitElement {
 
   private async initSession() {
     const model = 'gemini-2.5-flash-preview-native-audio-dialog';
-    const systemInstruction = `You are a helpful AI assistant. You have been provided with Kartavya Master's resume. Please answer questions based on this resume. If asked about contact details, provide the email and phone number from the resume.
+    const systemInstruction = `You are a helpful AI assistant. You have been provided with Yash Prajapati's resume. Please answer questions based on this resume. If asked about contact details, provide the email and phone number from the resume.
 
-Kartavya Master's Resume:
+Yash Prajapati's Resume:
 ---
 ${RESUME_DATA}
 ---
 `;
 
     try {
+      if (!this.client) {
+        throw new Error('GoogleGenAI client not initialized');
+      }
       this.session = await this.client.live.connect({
         model: model,
         callbacks: {
           onopen: () => {
-            this.updateStatus('Connection Opened. Ask me about Kartavya Master.');
+            this.updateStatus('Connection Opened. Ask me about Yash Prajapati.');
           },
           onmessage: async (message: LiveServerMessage) => {
-            const audio =
-              message.serverContent?.modelTurn?.parts[0]?.inlineData;
+            const audio = (message.serverContent?.modelTurn?.parts?.[0]?.inlineData) as any;
 
-            if (audio) {
+            if (audio && typeof audio === 'object' && 'data' in audio) {
               this.nextStartTime = Math.max(
                 this.nextStartTime,
                 this.outputAudioContext.currentTime,
@@ -257,7 +272,7 @@ ${RESUME_DATA}
       this.updateStatus('Microphone access granted. Starting capture...');
 
       this.sourceNode = this.inputAudioContext.createMediaStreamSource(
-        this.mediaStream,
+        this.mediaStream!,
       );
       this.sourceNode.connect(this.inputNode);
 
@@ -292,7 +307,7 @@ ${RESUME_DATA}
 
 
       this.isRecording = true;
-      this.updateStatus('🔴 Recording... Ask me about Kartavya!');
+      this.updateStatus('🔴 Recording... Ask me about Yash!');
     } catch (err) {
       console.error('Error starting recording:', err);
       this.updateStatus(`Error: ${(err as Error).message}`);
