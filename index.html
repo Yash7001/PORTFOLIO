@@ -998,10 +998,12 @@
       const voiceBotBtn = document.getElementById('voiceBotBtn');
       const voiceBotModal = document.getElementById('voiceBotModal');
       const closeVoiceBot = document.getElementById('closeVoiceBot');
+      let iframe = null;
+      
       voiceBotBtn.onclick = function() {
         voiceBotModal.style.display = 'block';
-        // Ensure iframe is properly loaded and sized
-        const iframe = document.querySelector('#voiceBotModalContent iframe');
+        // Get the iframe reference
+        iframe = document.querySelector('#voiceBotModalContent iframe');
         if (iframe) {
           iframe.style.display = 'block';
           // Force a resize event to trigger WebGL canvas initialization
@@ -1010,14 +1012,47 @@
           }, 100);
         }
       };
-      closeVoiceBot.onclick = function() {
+      
+      function stopVoiceBot() {
+        // Send stop message to iframe if it exists
+        if (iframe && iframe.contentWindow) {
+          try {
+            // Send a custom message to stop the voice bot
+            iframe.contentWindow.postMessage({ action: 'stopVoiceBot' }, '*');
+          } catch (e) {
+            console.log('Could not send message to iframe:', e);
+          }
+        }
+        
+        // Hide the modal
         voiceBotModal.style.display = 'none';
+        
+        // Reload the iframe to ensure clean state for next use
+        if (iframe) {
+          const currentSrc = iframe.src;
+          iframe.src = '';
+          setTimeout(() => {
+            iframe.src = currentSrc;
+          }, 100);
+        }
+      }
+      
+      closeVoiceBot.onclick = function() {
+        stopVoiceBot();
       };
+      
       window.onclick = function(event) {
         if (event.target === voiceBotModal) {
-          voiceBotModal.style.display = 'none';
+          stopVoiceBot();
         }
       };
+      
+      // Also handle escape key to close modal
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && voiceBotModal.style.display === 'block') {
+          stopVoiceBot();
+        }
+      });
     </script>
     <!-- Voice Bot Floating Button and Modal End -->
   </body>

@@ -131,6 +131,32 @@ export class GdmLiveAudio extends LitElement {
   constructor() {
     super();
     this.initClient();
+    this.setupMessageListener();
+  }
+
+  private setupMessageListener() {
+    // Listen for messages from parent window (portfolio page)
+    this.messageHandler = (event) => {
+      // Check if the message is from our portfolio page
+      if (event.data && typeof event.data === 'object' && event.data.action === 'stopVoiceBot') {
+        console.log('Received stop command from parent window');
+        this.stopRecording();
+        this.reset();
+      }
+    };
+    
+    window.addEventListener('message', this.messageHandler);
+  }
+
+  private messageHandler: ((event: MessageEvent) => void) | null = null;
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    // Clean up the message listener when component is destroyed
+    if (this.messageHandler) {
+      window.removeEventListener('message', this.messageHandler);
+      this.messageHandler = null;
+    }
   }
 
   private initAudio() {
