@@ -10,49 +10,45 @@ import {customElement, state} from 'lit/decorators.js';
 import {createBlob, decode, decodeAudioData} from './utils';
 import './visual-3d';
 
-const RESUME_DATA = `
-Yash Prajapati
-yashprajapati1007@gmail.com • 9313077125 • LinkedIn • Github • Portfolio • Ahmedabad, Gujarat
+const RESUME_DATA = `Yash Prajapati
++91-9313077125 | yashprajapati1007@gmail.com | LinkedIn.com/in/yashprajapati1007
 
-Professional Summary & Skills
-AI/ML enthusiast with hands-on experience from an internship at ISRO, where I worked on satellite image reconstruction using deep learning models. Passionate about how AI is reshaping the world. Skilled in Python, TensorFlow, Keras, and the MERN stack. Known as a fast learner with high patience, strong problem-solving abilities, and eager to mentor freshers and interns in the future. Currently, seeking a internshps as well as full-time roles in AI/ML or Data science. Ready to join Immediately. Also ready to work in any location in the world.
+PROJECTS											           
+Partial Line Loss Correction: Certificate
+•	As a part of ISRO’s research, single-handedly developed a ConvLSTM-based model for predicting missing data in INSAT 3DS satellite images, using thousands of image sequences.
+•	Implemented a binary mask approach to restore missing pixels, normalizing pixel values and achieving a MAE of 0.006, and accuracy of about 98% with minimal image modifications.
 
-Professional Work Experience
-• AI/ML Intern | Space Applications Centre-ISRO | 01/2025 - 04/2025
-  o Developed a deep learning model using a hybrid ConvLSTM architecture to reconstruct missing or corrupted satellite datasets by leveraging advanced image processing techniques and learning spatiotemporal patterns.
+Lead Generator agent: JSON file
+•	Engineered an AI-powered lead generation agent in n8n to automate the end-to-end prospecting workflow.
+•	Automated web scraping using Apify to collect business data from target locations.
+•	Processed and summarized text with Hugging Face (BART) for concise business insights.
+•	Generated personalized HTML marketing emails through the Cohere API, tailored to company profiles
 
-• SDE Intern | Gift Company Limited | 06/2024 - 07/2024
-  o Streamlined a lengthy process by developing an efficient DOP application with MySQL database integration, reducing paperwork by 75%.
+EXPERIENCE											           
+AI/ML Intern, Moweb Technologies Pvt. ltd	     				Aug. 2025 – Present
+•	Developed an AI-driven lead–property matching system using content-based filtering with cosine similarity, replacing the client’s existing rule-based recommender.
+•	Improved CNN model accuracy from 76% to 91% by redesigning the network architecture and optimizing hyperparameters for image classification.
 
-Selected Projects
-• Partial Line Loss Correction: Certificate
-  o As a part of ISRO's research, single-handedly developed a ConvLSTM-based model for predicting missing pixels in INSAT 3DS satellite images, using thousands of image sequences.
-  o Implemented a binary mask approach to restore missing pixels, normalizing pixel values and achieving a MAE of 0.0006, and accuracy of about 98% with minimal image modifications.
-
-• Wanderlust: A Hotel Booking Website: GitHub Repo
-  o Created a robust hotel exploration platform using the MERN stack with signup/login features.
-  o Has implementation and showcase of various CRUD operations.
+AI/ML Intern, SAC-ISRO, Ahmedabad						Jan. 2025 – Apr. 2025
+•	Conducted research in the fields of image reconstruction and image prediction using various CNN models and LSTM.
+•	Utilized INSAT-3DS Satellite data by MOSDAC, ISRO for training the model for the image prediction. The research achieved an accuracy of about 98% with MAE of 0.0006.
 
 SKILLS											           
-• Data Science & Machine Learning: Deep Learning, Computer Vision, Supervised Learning, Model Optimization, Data Preprocessing, CNN, LSTM, ANN
-• Programming Languages: Python, JavaScript, C
-• Libraries & Frameworks: TensorFlow, Keras, NumPy, Matplotlib, OpenCV, scikit-learn, Pandas
-• Web Development: HTML, CSS, Node.js, React.js, SQL
-• Tools: Git, GitHub, Visual Studio Code, Jupyter Notebook, Google Colab
-• Soft skills: Patience, Leadership, Communication, fast-learner
+AI Automation: n8n, AI APIs, LangChain, Langraph, MCP
+Generative AI: LLMs, NLP, RAG (Retrieval-Augmented Generation), Vector database, Prompt Engineering, Hugging Face
+ML/DL: Supervised & Unsupervised Algorithms, Model Optimization, CNN, LSTM, Transformers
+Libraries & Frameworks: TensorFlow, Keras, scikit-learn, NumPy, Pandas, Matplotlib, OpenCV, Pydantic
+Programming Languages: Python, JavaScript
+Tools: GitHub, Visual Studio Code, Jupyter Notebook, Google Colab
+Soft skills: Patience, Leadership, problem-solving
 
-Education
-• Sal Institute of Technology and Engineering Research (October, 2021 - June, 2025)
-  B.E in Information and Communication Technology
-  C.CGPA = 7.72
-
-Certifications/Courses
-• Google AI Essentials
-• Full Stack Development
+EDUCATION											           
+Bachelor of Engineering, Information and Communication Technology (ICT)		Oct. 2021 – June. 2025
+Sal Institute of Technology and Engineering Research, Ahmedabad, CGPA: 7.72
 
 ACHIEVEMENTS										           
-•	Led university football team to 3 consecutive inter-college championships by valuing every player and making quick, strategic on-field decisions.
-
+•	Enhanced a skin cancer detection POC by redesigning the CNN architecture and data augmentation pipeline, achieving 91% accuracy (from 76%) and improving model sensitivity through recall-based evaluation.
+•	Led university football team to 3 inter-college championships by valuing every player and making quick, strategic on-field decisions.
 `;
 
 @customElement('gdm-live-audio')
