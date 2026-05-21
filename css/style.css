@@ -10378,6 +10378,17 @@ h6,
   left: 30px;
 }
 
+.portfolio-more-notice {
+  text-align: center;
+  padding: 0.85rem 1.25rem;
+  border: 2px solid var(--primary);
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--primary);
+}
+
 .testimonial-carousel .owl-dots {
   margin-top: 25px;
   text-align: center;
@@ -10414,4 +10425,48 @@ h6,
   margin: 0;
   padding: 0;
   list-style-type: none;
+}
+
+#skills-filters li {
+  cursor: pointer;
+}
+
+.skills-container .skill-item .skill-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+}
+
+.skills-container .skill-item:hover .skill-card {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 25px rgba(11, 206, 175, 0.25);
+}
+
+.skills-container .skill-item .skill-card .card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 130px;
+  padding: 1.25rem 1rem;
+}
+
+.skills-container .skill-item .skill-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.skills-container .skill-item .skill-logo-icon {
+  font-size: 2.5rem;
+  color: #0bceaf;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.skills-container .skill-item .skill-card h4 {
+  color: #232323;
+  font-size: 0.95rem;
+  line-height: 1.3;
 }

@@ -1,5 +1,10 @@
 {
   "dependencies": {
-    "dotenv": "^16.4.5"
+    "@google/genai": "^2.3.0",
+    "dotenv": "^16.4.5",
+    "lit": "^3.3.3"
+  },
+  "devDependencies": {
+    "vite": "^8.0.13"
   }
 }
